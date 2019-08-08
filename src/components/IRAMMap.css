@@ -1,0 +1,16 @@
+.map-container {
+    width: 450px;
+    margin: 4px;
+}
+
+.map-container path {
+    fill: rgb(0, 80, 117);
+}
+
+.map-container path:hover {
+    fill: rgb(165, 0, 0);
+}
+
+.selected-path {
+    fill: red !important;
+}

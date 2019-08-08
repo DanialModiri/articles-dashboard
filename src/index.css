@@ -1,0 +1,24 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: IRANSans;
+    font-size: 15px;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+h4 {
+    text-align: right;
+}
+
+a {
+    text-decoration: none;
+    color: #858585;
+}
+
+a:hover {
+    color: #686868;
+}

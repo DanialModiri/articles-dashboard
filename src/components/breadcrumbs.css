@@ -1,0 +1,27 @@
+
+
+.breadcrumb {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    list-style: none;
+}
+
+.breadcrumb-item {
+    color: #858585;
+    cursor: pointer;
+}
+
+.breadcrumb-item:not(:first-child)::before {
+    content: '/';
+    margin: 4px;
+    color: #858585;
+}
+
+.breadcrumb-item:hover {
+    color: #505050;
+}
+
+gggg {
+    color: #005b80;
+}

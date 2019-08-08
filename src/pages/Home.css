@@ -1,0 +1,82 @@
+
+@keyframes coming-in {
+    
+    from {
+        transform: translateX(50px);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.home-head {
+    display: flex;
+    overflow: hidden;
+}
+
+.home-head .card .header {
+    width: 250px;
+    display: flex;
+}
+
+.home-head .card {
+    position: relative;
+    color: white;
+    border: 0;
+    border-radius: 4px;
+    padding: 16px;
+    margin-right: 16px;
+    animation-name: coming-in;
+    animation-duration: 0.5s;
+}
+
+.home-head .card:hover {
+    opacity: 0.9;
+}
+
+.home-head .title {
+    flex-grow: 1;
+}
+
+.home-head i {
+    font-size: 55px;
+    right: 0;
+    position: absolute;
+}
+
+.home-head .card h3 {
+    font-size: 18px;
+    margin-top: 16px;
+}
+
+.details {
+    min-width: 150px;
+    border-left: 1px solid #eeeeee;
+    padding: 6px;
+    flex-grow: 1;
+}
+
+.details h4 {
+    padding: 4px;
+    text-align: right;
+}
+
+.cities {
+    display: flex;
+    justify-content: center;
+}
+
+.city {
+    margin: 0 16px;
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    animation-name: coming-in;
+    animation-duration: 0.5s;
+}
+
+.city:hover {
+    background-color: rgb(0, 122, 221);
+    color: white;
+    border-radius: 4px;
+}
