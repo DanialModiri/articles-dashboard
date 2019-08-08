@@ -3,6 +3,7 @@ import './View.css'
 import { inject, observer } from 'mobx-react';
 import classnames from 'classnames'
 import Loading from '../../components/Loading';
+import DropdownButton, { DropdownOption, DropdownOptionTitle, DropdownOptionIcon } from '../../components/DropdownButton';
 
 const formatDate = (date) => {
     date = new Date(date);
@@ -122,7 +123,7 @@ class ArticlesView extends React.Component {
         return <React.Fragment>
             <SearchCard onChange={(value) => {
                 const query = {};
-                if(value.length === 0)
+                if (value.length === 0)
                     query.search = undefined;
                 else
                     query.search = value;
@@ -143,7 +144,26 @@ class ArticlesView extends React.Component {
                                             {column.format ? column.format(item[column.value]) : item[column.value]}
                                         </td>)}
                                         <td>
-                                            <i class="action fas fa-ellipsis-v"></i>
+                                            <DropdownButton>
+                                                <DropdownOption onClick={() => alert('Hello')}>
+                                                    <DropdownOptionIcon icon="fa fa-trash" />
+                                                    <DropdownOptionTitle>
+                                                        حذف
+                                                    </DropdownOptionTitle>
+                                                </DropdownOption>
+                                                <DropdownOption onClick={() => alert('Hello')}>
+                                                    <DropdownOptionIcon icon="fa fa-edit" />
+                                                    <DropdownOptionTitle>
+                                                        ویرایش
+                                                    </DropdownOptionTitle>
+                                                </DropdownOption>
+                                                <DropdownOption onClick={() => alert('Hello')}>
+                                                <DropdownOptionIcon icon="fas fa-eye" />
+                                                    <DropdownOptionTitle>
+                                                        مشاهده
+                                                    </DropdownOptionTitle>
+                                                </DropdownOption>
+                                            </DropdownButton>
                                         </td>
                                     </tr>)
                                 }
