@@ -75,14 +75,16 @@ class ArticlesView extends React.Component {
     }
 
     sort = (sort) => {
-        this.setState({ sort: sort });
+        this.setState({ sort: sort }, () => {
+            this.props.articles.getArticles({ sort: sort.column, sortDirection: sort.direction })
+        });
     }
 
     render() {
 
         const articlesStore = this.props.articles;
         const articles = articlesStore.articles;
-
+        const loading = articlesStore.loading;
         const columnOrder = this.state.columnOrder;
 
         return <div className="card">
@@ -91,13 +93,14 @@ class ArticlesView extends React.Component {
                     columnOrder={this.state.columnOrder}
                     sortColumn={this.state.sort.column}
                     sortDirection={this.state.sort.direction} />
-                <tbody>
+                {loading ? <span>Loading</span> : <tbody>
                     {articles.map(item => <tr key={item._id}>
                         {columnOrder.map((column, index) => <td key={column.value}>
                             {column.format ? column.format(item[column.value]) : item[column.value]}
                         </td>)}
                     </tr>)}
-                </tbody>
+                </tbody>}
+
                 <tfoot>
                     <Pagination></Pagination>
                 </tfoot>

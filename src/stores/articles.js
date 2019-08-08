@@ -7,14 +7,17 @@ import comon from "./comon";
 class Articles {
 
     @observable articles = [];
-    @observable page = 1;
+    @observable loading = false;
     @observable query = {
 
     }
 
-    @action async getArticles() {
+    @action async getArticles(query = {}) {
+        this.query = {...this.query, query};
+        this.query.page = 1;
+        this.loading = true;
         try {
-            const res = await Axios.get("/articles", { params: { ...this.query, page: this.page, perPage: this.perPage }, });
+            const res = await Axios.get("/articles", { params: query } );
             this.articles = res.data.articles;
         } catch (err) {
             if (err && err.response)
@@ -22,7 +25,7 @@ class Articles {
             else
                 comon.setError(err.message);
         }
-
+        this.loading = false;
     }
 }
 
