@@ -4,6 +4,8 @@ import { inject, observer } from 'mobx-react';
 import classnames from 'classnames'
 import Loading from '../../components/Loading';
 import DropdownButton, { DropdownOption, DropdownOptionTitle, DropdownOptionIcon } from '../../components/DropdownButton';
+import DatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css";
 
 const formatDate = (date) => {
     date = new Date(date);
@@ -76,8 +78,26 @@ const TableHead = ({ columnOrder, onSortChange, sortColumn, sortDirection }) => 
 
 const ArticlesFilter = () => {
 
-    return <div className="card">
+    const [query, setQuery] = React.useState({
+        fromDate: null,
+        toDate: null
+    });
 
+    const handleChange  = (name, value) => {
+        setQuery({...query, [name]: value})
+    }
+
+    return <div className="card" style={{ marginBottom: 8 }}>
+        <div className="filter-item">
+            <span style={{ marginLeft: 8 }}>از تاریخ</span>
+            <DatePicker selected={query.fromDate} onChange={(value) => {
+                setQuery({ ...query, fromDate: value });
+            }} />
+            <span style={{ margin: '0 8px' }}>
+                تا تاریخ
+            </span>
+            <DatePicker selected={query.toDate} onChange={(value) => handleChange('toDate', value)} />
+        </div>
     </div>
 }
 
@@ -129,6 +149,9 @@ class ArticlesView extends React.Component {
                     query.search = value;
                 articlesStore.getArticles(query);
             }} />
+
+            <ArticlesFilter></ArticlesFilter>
+
             <div className="card">
                 <table className="articles-table">
                     <TableHead onSortChange={this.sort}

@@ -4,18 +4,6 @@
     border-collapse: collapse;
 }
 
-.action {
-    width: 35px;
-    height: 35px;
-    line-height: 35px;
-    text-align: center;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.action:hover {
-    background-color: #cccccc;
-}
 
 .search {
     width: 450px;
@@ -40,6 +28,11 @@
     margin: auto 6px;
 }
 
+.filter-item {
+    direction: rtl;
+    display: flex;
+    text-align: right;
+}
 
 .articles-table tr:hover {
     background-color: rgb(235, 235, 235);
