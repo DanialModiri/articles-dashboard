@@ -73,6 +73,24 @@ const TableHead = ({ columnOrder, onSortChange, sortColumn, sortDirection }) => 
 }
 
 
+const ArticlesFilter = () => {
+
+    return <div className="card">
+
+    </div>
+}
+
+const SearchCard = ({ onChange }) => {
+    return (
+        <div className="card" onChange={(e) => onChange(e.target.value)} style={{ marginBottom: 8, display: 'flex', direction: 'rtl' }}>
+            <div className="search">
+                <input placeholder="جستوجو" />
+                <i className="fas fa-search"></i>
+            </div>
+        </div>
+    )
+}
+
 @inject('articles') @observer
 class ArticlesView extends React.Component {
 
@@ -101,36 +119,46 @@ class ArticlesView extends React.Component {
 
         const page = (articlesStore.query || {}).page || 1;
 
-        return <div className="card">
-            <table className="articles-table">
-                <TableHead onSortChange={this.sort}
-                    columnOrder={this.state.columnOrder}
-                    sortColumn={this.state.sort.column}
-                    sortDirection={this.state.sort.direction} />
-                <tbody>
-                    {loading ? <Loading /> :
-                        <React.Fragment>
-                            {
-                                articles.map(item => <tr key={item._id}>
-                                    {columnOrder.map((column, index) => <td key={column.value}>
-                                        {column.format ? column.format(item[column.value]) : item[column.value]}
-                                    </td>)}
-                                    <td>
-                                        <i class="action fas fa-ellipsis-v"></i>
-                                    </td>
-                                </tr>)
-                            }
-                        </React.Fragment>}
-                </tbody>
+        return <React.Fragment>
+            <SearchCard onChange={(value) => {
+                const query = {};
+                if(value.length === 0)
+                    query.search = undefined;
+                else
+                    query.search = value;
+                articlesStore.getArticles(query);
+            }} />
+            <div className="card">
+                <table className="articles-table">
+                    <TableHead onSortChange={this.sort}
+                        columnOrder={this.state.columnOrder}
+                        sortColumn={this.state.sort.column}
+                        sortDirection={this.state.sort.direction} />
+                    <tbody>
+                        {loading ? <Loading /> :
+                            <React.Fragment>
+                                {
+                                    articles.map(item => <tr key={item._id}>
+                                        {columnOrder.map((column, index) => <td key={column.value}>
+                                            {column.format ? column.format(item[column.value]) : item[column.value]}
+                                        </td>)}
+                                        <td>
+                                            <i class="action fas fa-ellipsis-v"></i>
+                                        </td>
+                                    </tr>)
+                                }
+                            </React.Fragment>}
+                    </tbody>
 
-            </table>
-            <Pagination
-                currentPage={page}
-                onChange={(values) => {
-                    console.log(values)
-                    articlesStore.getArticles(values);
-                }} />
-        </div>
+                </table>
+                <Pagination
+                    currentPage={page}
+                    onChange={(values) => {
+                        console.log(values)
+                        articlesStore.getArticles(values);
+                    }} />
+            </div>
+        </React.Fragment>
     }
 }
 

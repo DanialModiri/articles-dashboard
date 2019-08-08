@@ -9,7 +9,6 @@
     height: 35px;
     line-height: 35px;
     text-align: center;
-    background-color: #eee;
     border-radius: 50%;
     cursor: pointer;
 }
@@ -17,6 +16,30 @@
 .action:hover {
     background-color: #cccccc;
 }
+
+.search {
+    width: 450px;
+    display: flex;
+    direction: rtl;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    height: 45px;
+    margin: 8px;
+}
+
+.search .fa-search {
+    margin: auto 5px;
+}
+
+.search input {
+    width: 100%;
+    flex-grow: 1;
+    border: 0;
+    outline: none;
+    padding: 0;
+    margin: auto 6px;
+}
+
 
 .articles-table tr:hover {
     background-color: rgb(235, 235, 235);
