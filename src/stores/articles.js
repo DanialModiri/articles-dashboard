@@ -13,11 +13,11 @@ class Articles {
     }
 
     @action async getArticles(query = {}) {
-        this.query = {...this.query, query};
         this.query.page = 1;
+        this.query = {...this.query, ...query};
         this.loading = true;
         try {
-            const res = await Axios.get("/articles", { params: query } );
+            const res = await Axios.get("/articles", { params: this.query } );
             this.articles = res.data.articles;
         } catch (err) {
             if (err && err.response)

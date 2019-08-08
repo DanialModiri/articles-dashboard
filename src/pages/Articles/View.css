@@ -4,6 +4,20 @@
     border-collapse: collapse;
 }
 
+.action {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background-color: #eee;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.action:hover {
+    background-color: #cccccc;
+}
+
 .articles-table tr:hover {
     background-color: rgb(235, 235, 235);
 }
@@ -55,6 +69,34 @@
     padding: 8px;
 }
 
-.articles-table .left span {
+.table-pagination .left span {
     margin-left: 8px;
+}
+
+.table-pagination .right input {
+    width: 35px;
+    text-align: center;
+}
+
+.table-pagination .angle {
+    width: 35px;
+    height: 35px;
+    margin: auto 4px;
+    background: #eee;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 35px;
+}
+
+.table-pagination .angle:hover {
+    background-color: #cccccc;
+}
+
+.table-pagination .left {
+    flex-grow: 1;
+}
+
+.table-pagination {
+    display: flex;
+    padding: 8px;
 }

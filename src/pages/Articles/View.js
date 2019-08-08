@@ -2,6 +2,7 @@ import React from 'react';
 import './View.css'
 import { inject, observer } from 'mobx-react';
 import classnames from 'classnames'
+import Loading from '../../components/Loading';
 
 const formatDate = (date) => {
     date = new Date(date);
@@ -15,25 +16,33 @@ const formatBody = (body) => {
 }
 
 const columnOrder = [
-    { label: 'عنوان', value: 'title', format: formatBody },
-    { label: 'تعداد بازدید', value: 'views' },
-    { label: 'مطالب', value: 'body', format: formatBody },
-    { label: 'تاریخ', value: 'date', format: formatDate },
+    { width: 250, label: 'عنوان', value: 'title', format: formatBody },
+    { width: 75, label: 'تعداد بازدید', value: 'views' },
+    { width: 250, label: 'مطالب', value: 'body', format: formatBody },
+    { width: 250, label: 'تاریخ', value: 'date', format: formatDate },
 
 ]
 
-const Pagination = () => {
+const Pagination = ({ onChange, currentPage }) => {
 
     return <div className="table-pagination">
         <div className="left">
-            <select>
-                <option>5</option>
-                <option selected>10</option>
-                <option>15</option>
+            <select defaultValue={10} onChange={(e) => {
+                onChange({ perPage: e.target.value });
+            }}>
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={15}>15</option>
             </select>
             <span>
                 در هر صفحه
             </span>
+        </div>
+        <div className="right">
+            <span style={{ fontSize: 18 }}>{currentPage}</span>
+            <i onClick={() => { onChange({ page: currentPage - 1 > 0 ? currentPage - 1 : 1 }) }} class="angle fas fa-angle-left"></i>
+            <i onClick={() => { onChange({ page: currentPage + 1 }) }} class="angle fas fa-angle-right"></i>
+
         </div>
     </div>
 }
@@ -42,7 +51,7 @@ const Pagination = () => {
 const TableHead = ({ columnOrder, onSortChange, sortColumn, sortDirection }) => {
     return <thead>
         <tr>
-            {columnOrder.map(item => <td key={item.value} onClick={() => {
+            {columnOrder.map(item => <td key={item.value} style={{ width: item.width }} onClick={() => {
                 if (item.value === sortColumn)
                     onSortChange({ column: item.value, direction: sortDirection === 'asc' ? 'desc' : 'asc' });
                 else
@@ -56,6 +65,9 @@ const TableHead = ({ columnOrder, onSortChange, sortColumn, sortDirection }) => 
                     })}></i>
                 </div>
             </td>)}
+            <td style={{ width: 50 }}>
+                عملیات
+            </td>
         </tr>
     </thead>
 }
@@ -87,24 +99,37 @@ class ArticlesView extends React.Component {
         const loading = articlesStore.loading;
         const columnOrder = this.state.columnOrder;
 
+        const page = (articlesStore.query || {}).page || 1;
+
         return <div className="card">
             <table className="articles-table">
                 <TableHead onSortChange={this.sort}
                     columnOrder={this.state.columnOrder}
                     sortColumn={this.state.sort.column}
                     sortDirection={this.state.sort.direction} />
-                {loading ? <span>Loading</span> : <tbody>
-                    {articles.map(item => <tr key={item._id}>
-                        {columnOrder.map((column, index) => <td key={column.value}>
-                            {column.format ? column.format(item[column.value]) : item[column.value]}
-                        </td>)}
-                    </tr>)}
-                </tbody>}
+                <tbody>
+                    {loading ? <Loading /> :
+                        <React.Fragment>
+                            {
+                                articles.map(item => <tr key={item._id}>
+                                    {columnOrder.map((column, index) => <td key={column.value}>
+                                        {column.format ? column.format(item[column.value]) : item[column.value]}
+                                    </td>)}
+                                    <td>
+                                        <i class="action fas fa-ellipsis-v"></i>
+                                    </td>
+                                </tr>)
+                            }
+                        </React.Fragment>}
+                </tbody>
 
-                <tfoot>
-                    <Pagination></Pagination>
-                </tfoot>
             </table>
+            <Pagination
+                currentPage={page}
+                onChange={(values) => {
+                    console.log(values)
+                    articlesStore.getArticles(values);
+                }} />
         </div>
     }
 }
