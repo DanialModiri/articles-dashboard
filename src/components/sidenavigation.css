@@ -2,12 +2,12 @@
     width: 300px;
     list-style: none;
     border-right: 1px solid #cccccc;
-    height: 100vh;
     font-size: 18px;
     color: #858585;
     cursor: pointer;
     transition: width 0.1s ease;
     overflow: hidden;
+    min-height: 100vh;
 }
 
 .collapse {
